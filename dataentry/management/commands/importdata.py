@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 # from dataentry.models import Student
 from django.apps import apps
 import csv
+from django.db import DataError
 
 # command - python manage.py importdata <file_path> <model_name>
 class Command(BaseCommand):
@@ -25,9 +26,22 @@ class Command(BaseCommand):
         continue # Try next app   
     if not model:
       raise CommandError(f'Model "{model_name}" not found in any app!')
+    
+    # compare scv header with mode field names
+    model_fields = [field.name for field in model._meta.fields if field.name != "id"]
+    print(model_fields)
       
     with open(file_path, "r") as file:
-      reader = csv.DictReader(file)
+      reader = csv.DictReader(file) # DictReader takes the first row as header
+      csv_header = reader.fieldnames
+
+      # compare csv heade with model's field names
+      if csv_header != model_fields:
+        raise DataError(f"CSV header does not match the {model_name} table fields.")
+
+
+
+
       for row in reader:
         model.objects.create(**row)
     self.stdout.write(self.style.SUCCESS("Data imported from CSV successfully!"))

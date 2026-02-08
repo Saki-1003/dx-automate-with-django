@@ -1,0 +1,86 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automate the business process with Django</title>
+  {% tailwind_css %}
+</head>
+<body class="bg-slate-700 min-h-screen">
+  <div class="w-full">
+    <h3 class="w-full text-white text-center text-3xl font-bold my-10">Import Data to Database</h3>
+    <form action="{% url 'import_data'%}" method="POST" enctype="multipart/form-data" class="px-10 py-20 max-w-4xl mx-auto">
+      {% csrf_token %}
+      <div class="w-full mb-10">
+        <label for="file_path" class="text-white text-xl block mb-3">
+          Upload CSV file
+        </label>
+
+        <!-- ボタン -->
+        <label 
+          for="file_path"
+          class="inline-flex items-center gap-2 bg-slate-200 hover:bg-slate-300 text-indigo-600 font-semibold py-2 px-4 rounded cursor-pointer transition"
+        >
+          <span>Choose CSV</span>
+        </label>
+
+        <!-- ファイル名 -->
+        <span id="file-name" class="text-white text-lg ml-4 opacity-80"></span>
+
+        <!-- 隠し input -->
+        <input 
+          id="file_path"
+          type="file"
+          name="file_path"
+          accept=".csv"
+          class="hidden"
+        >
+
+        <!-- エラーメッセージ -->
+        <p id="file-error" class="text-red-300 text-sm mt-2 hidden">
+          ファイルが選択されていません
+        </p>
+      </div>
+      <div class="">
+        <label for="model_name" class="text-white text-xl block">Select Database Table</label>
+        <select name="model_name" class="bg-white border-2 border-gray-300 rounded w-full p-2.5 mt-2" required>
+          <option value="" disabled selected>Select</option>
+          {% for model in custom_models %}
+          <option value="{{model}}">{{model}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <input type="submit" value="Import Data" class="bg-blue-500 hover:bg-blue-700 text-white text-xl py-2 px-4 rounded mt-10 cursor-pointer">
+   
+      {% include 'alerts.html'%}
+
+    </form>
+  </div>
+
+  <script>
+      const input = document.getElementById('file_path');
+      const fileName = document.getElementById('file-name');
+      const errorMsg = document.getElementById('file-error');
+
+      // ファイル選択時の処理
+      input.addEventListener('change', () => {
+        const file = input.files[0];
+        fileName.textContent = file ? file.name : "";
+        errorMsg.classList.add('hidden');  // エラー非表示
+      });
+
+      // フォーム送信時のチェック
+      document.querySelector('form').addEventListener('submit', (e) => {
+        if (!input.files.length) {
+          e.preventDefault(); // 送信を止める
+          errorMsg.classList.remove('hidden'); // エラー表示
+        }
+      });
+  </script>
+
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+
+{% if messages %}
+<div class="w-full flex justify-center mt-8">
+  <div class="space-y-3">
+    {% for message in messages %}
+    <div 
+        class="
+            px-12 py-3 rounded-lg shadow-xl text-white text-xl text-center animate-snackbar
+            {% if message.tags == 'success' %} bg-teal-600 {% endif %}
+            {% if message.tags == 'error' %} bg-red-600 {% endif %}
+            {% if message.tags == 'warning' %} bg-yellow-500 text-black {% endif %}
+            {% if message.tags == 'info' %} bg-blue-600 {% endif %}
+        "
+    >
+        {{ message }}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
