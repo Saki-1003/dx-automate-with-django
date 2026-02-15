@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static tailwind_tags %}
+{% block body_class %}bg-slate-700 min-h-screen{% endblock %}
+
+
+{% block content %}
+<div class="bg-slate-700 min-h-screen">
+  <div class="w-full">
+    <h3 class="w-full text-white text-center text-3xl font-bold my-10">Export Data from Database</h3>
+    <form action="{% url 'export_data'%}" method="POST" class="px-10 py-20 max-w-4xl mx-auto">
+      {% csrf_token %}
+
+      <div>
+        <label for="model_name" class="text-white text-xl block">Select Database Table</label>
+        <select name="model_name" class="bg-white border-2 border-gray-300 rounded w-full p-2.5 mt-2" required>
+          <option value="" disabled selected>Select</option>
+          {% for model in custom_models %}
+          <option value="{{model}}">{{model}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <input type="submit" value="Export Data" class="bg-blue-500 hover:bg-blue-700 text-white text-xl py-2 px-4 rounded mt-10 cursor-pointer">
+   
+      {% include 'alerts.html'%}
+
+    </form>
+  </div>
+
+</div>
+{% endblock %}

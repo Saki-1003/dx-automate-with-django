@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 # from dataentry.models import Student
 from django.apps import apps
-import datetime
+from dataentry.utils import generate_csv_file
 import csv
 
 # command - python manage.py exportdata <model_name>
@@ -30,11 +30,8 @@ class Command(BaseCommand):
     # fetch the data from db
     data = model.objects.all()
 
-    # generate timestamp
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-
-    # define the csv file name
-    file_path = f'exported_{model_name}_data_{timestamp}.csv'
+    # generate the csv file path
+    file_path = generate_csv_file(model_name)
 
     # open the csv file and write the data
     with open(file_path, 'w', newline='') as file:

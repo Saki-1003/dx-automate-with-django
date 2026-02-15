@@ -3,7 +3,8 @@ from .utils import get_all_custom_models, check_csv_errors
 from uploads.models import Upload
 from django.conf import settings
 from django.contrib import messages
-from dataentry.tasks import import_data_task
+from dataentry.tasks import import_data_task, export_data_task
+from django.core.management import call_command
 
 # Create your views here.
 def import_data(request):
@@ -30,7 +31,7 @@ def import_data(request):
         import_data_task.delay(file_path, model_name)
 
         # show the message to the user
-        messages.info(request, 'Data is now being imported in the background. You will be notified once the process is complete.')
+        messages.success(request, 'Data imported successully. You will receive an eamil once the backgroundprocess is complete.')
         return redirect('import_data')
     
     else:
@@ -39,3 +40,21 @@ def import_data(request):
           'custom_models': custom_models
         }
     return render(request, 'dataentry/importdata.html', context)
+
+
+def export_data(request):
+    if request.method == 'POST':
+        model_name = request.POST.get('model_name')
+
+        # call the expiort data task
+        export_data_task.delay(model_name)
+
+        # show the message to the user
+        messages.success(request, 'Data exported successfully. You will receive an email once the background process is complete.')
+        return redirect('export_data')
+    else:
+        custom_models = get_all_custom_models()
+        context = {
+            'custom_models': custom_models
+        }
+    return render(request, 'dataentry/exportdata.html', context)

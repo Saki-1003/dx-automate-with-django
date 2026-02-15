@@ -1,14 +1,10 @@
+{% extends "base.html" %}
 {% load static tailwind_tags %}
+{% block body_class %}bg-slate-700 min-h-screen{% endblock %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Automate the business process with Django</title>
-  {% tailwind_css %}
-</head>
-<body class="bg-slate-700 min-h-screen">
+
+{% block content %}
+<div class="bg-slate-700 min-h-screen">
   <div class="w-full">
     <h3 class="w-full text-white text-center text-3xl font-bold my-10">Import Data to Database</h3>
     <form action="{% url 'import_data'%}" method="POST" enctype="multipart/form-data" class="px-10 py-20 max-w-4xl mx-auto">
@@ -60,27 +56,5 @@
     </form>
   </div>
 
-  <script>
-      const input = document.getElementById('file_path');
-      const fileName = document.getElementById('file-name');
-      const errorMsg = document.getElementById('file-error');
-
-      // ファイル選択時の処理
-      input.addEventListener('change', () => {
-        const file = input.files[0];
-        fileName.textContent = file ? file.name : "";
-        errorMsg.classList.add('hidden');  // エラー非表示
-      });
-
-      // フォーム送信時のチェック
-      document.querySelector('form').addEventListener('submit', (e) => {
-        if (!input.files.length) {
-          e.preventDefault(); // 送信を止める
-          errorMsg.classList.remove('hidden'); // エラー表示
-        }
-      });
-  </script>
-
-
-</body>
-</html>
+</div>
+{% endblock %}
