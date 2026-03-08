@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static tailwind_tags %}
+{% load tailwind_filters %}
+{% block body_class %}min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-16{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-6 pt-16 shadow-lg rounded-lg bg-white mt-14">
+  
+  <h1 class="text-4xl font-extrabold text-center mb-14 text-gray-800 tracking-tight">
+    Login
+  </h1>
+
+  <form action="{% url 'login' %}" method="POST">
+    {% csrf_token %}
+
+    <div>
+      {{form | crispy}}
+    </div>
+
+    <div>
+      <input type="submit" value="Login" class="bg-blue-500 hover:bg-blue-700 text-white text-xl py-2 px-4 rounded mt-10 cursor-pointer mb-8">
+    </div>
+    
+    {% include 'alerts.html'%}
+
+  </form>
+{% endblock %} 
