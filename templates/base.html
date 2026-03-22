@@ -7,7 +7,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- CKeditor CDN -->
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
     {% tailwind_css %}
+    <style>
+        svg {
+            display: none !important;
+        }
+    </style>
 </head>
 
 <body class="{% block body_class %}bg-gray-50 text-black font-serif leading-normal tracking-normal{% endblock %}">
@@ -17,7 +25,7 @@
         <h1><a href="{% url 'home' %}" class="text-xl font-bold text-gray-800">Django DX Automation</a></h1>
 
         <div class="flex">
-          {% comment %} Show Logout if user is authenticated. user object is available anywhere in the django templates. {% endcomment %}
+          <!-- Show Logout if user is authenticated. user object is available anywhere in the django templates. -->
           {% if user.is_authenticated %}
           <div class="text-xl text-amber-700 mx-4 pt-3">Hello, {{user}}</div>
           <a href="{% url 'logout' %}" class="text-xl text-gray-600 border-1 py-2 px-3 rounded border-teal-500 shadow-sm hover:text-blue-600 mx-4">Logout</a>

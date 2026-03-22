@@ -49,9 +49,13 @@ def check_csv_errors(file_path, model_name):
 def send_email_notification(mail_subject, message, to_email, attachment=None):
     try:
         from_email = settings.DEFAULT_FROM_EMAIL
-        mail = EmailMessage(mail_subject, message, from_email, to=[to_email])
+        # to_email をリストに変換（文字列の場合）
+        if isinstance(to_email, str):
+            to_email = [to_email]
+        mail = EmailMessage(mail_subject, message, from_email, to=to_email)
         if attachment is not None:
            mail.attach_file(attachment)
+        mail.content_subtype = "html" # Set the email content type to HTML
         mail.send()
     except Exception as e:
        raise e

@@ -51,10 +51,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dataentry',
     'uploads',
+    'emails',
     'tailwind',
     'theme',
     'crispy_forms',
     'crispy_tailwind',
+    'ckeditor',
 ]
 
 TAILWIND_DEV_MODE = True
@@ -148,10 +150,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
 STATICFILES_DIRS = [
-    'dx_automation_main/static',
-] # static files for the development server
+    BASE_DIR / 'static',
+]
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 
 # Media file configuration

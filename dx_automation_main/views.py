@@ -28,30 +28,6 @@ def register(request):
     }
   return render(request, 'register.html', context)
 
-
-# def login(request):
-#   form = AuthenticationForm()
-
-#   if request.method == 'POST':
-#     form = AuthenticationForm(request, data=request.POST)
-
-#     if form.is_valid():
-#       username = form.cleaned_data['username']
-#       password = form.cleaned_data['password']
-
-#       user = auth.authenticate(username=username, password=password)
-
-#       # 成功時の処理
-#       if user is not None:
-#         auth.login(request, user)
-#         return redirect('home')
-      
-#     else:
-#       messages.error(request, 'Invalid credentials. Please try again.')
-
-#   # POST失敗時もここに来る
-#   return render(request, 'login.html', {'form': form})
-
 def login(request):
   if request.method == 'POST':
       form = AuthenticationForm(request, data=request.POST)
