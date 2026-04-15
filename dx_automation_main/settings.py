@@ -27,7 +27,8 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool) # Change the type to bool
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(",")
+
 
 # Message tags
 MESSAGE_TAGS = {
@@ -57,6 +58,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_tailwind',
     'ckeditor',
+    'anymail',
 ]
 
 TAILWIND_DEV_MODE = True
@@ -140,7 +142,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tokyo'
+
 
 USE_I18N = True
 
@@ -166,10 +169,17 @@ MEDIA_ROOT = BASE_DIR / 'media'
 CELERY_BROKER_URL = 'redis://localhost:6379'
 
 # Email Configuration
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_PORT = config('EMAIL_PORT', cast=int)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = True
+# EMAIL_HOST = config('EMAIL_HOST')
+# EMAIL_PORT = config('EMAIL_PORT', cast=int)
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+# EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 DEFAULT_TO_EMAIL = config('DEFAULT_TO_EMAIL')
+BASE_URL=config('BASE_URL')
+
+
+EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
+ANYMAIL = {
+    "SENDINBLUE_API_KEY": config('SENDINBLUE_API_KEY'),
+}

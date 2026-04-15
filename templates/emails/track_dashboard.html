@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static tailwind_tags %}
+{% block body_class %}min-h-screen bg-gradient-to-br from-blue-50 to-indigo-60 py-16{% endblock %}
+
+{% block content %}
+<div class="max-w-full mx-auto px-6 pt-16f flex flex-col justify-center">
+  <h2 class="text-4xl font-extrabold text-center mb-14 text-gray-800 tracking-tight pt-20">Email Engagement Tracking</h2>
+  <table class="min-w-fu shadow-lg rounded-lg overflow-hidden">
+    <thead class="bg-sky-600 text-white font-semibold">
+      <tr>
+        <th class="py-3 px-6 text-left text-lg font-medium">No.</th>
+        <th class="py-3 px-6 text-left text-lg font-medium">Email Subject</th>
+        <th class="py-3 px-6 text-left text-lg font-medium">Mailing List</th>
+        <th class="py-3 px-6 text-left text-lg font-medium">Total Sent</th>
+        {% comment %} <th class="py-3 px-6 text-left text-lg font-medium">Open Rate</th> {% endcomment %}
+        <th class="py-3 px-6 text-left text-lg font-medium">Click Rate</th>
+        <th class="py-3 px-6 text-left text-lg font-medium">Sent At</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for email in emails %}
+      <tr onClick="window.location='{% url 'track_stats' email.id%}'"
+        class="border-b border-gray-400 text-lg hover:bg-blue-200">
+          <td class="py-4 px-6">{{ forloop.counter }}</td>
+          <td class="py-4 px-6">{{ email.subject }}</td>
+          <td class="py-4 px-6">{{ email.email_list }}</td>
+          <td class="py-4 px-6">{{ email.email_list.count_emails}}</td>
+          {% comment %} <td class="py-4 px-6">{{ email.open_count }}</td> {% endcomment %}
+          <td class="py-4 px-6">{{ email.calculate_click_rate }}%</td>
+          <td class="py-4 px-6">{{ email.sent_at }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4" class="py-4 px-6 text-center text-gray-500">No emails sent yet.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

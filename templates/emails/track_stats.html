@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static tailwind_tags %}
+{% block body_class %}min-h-screen bg-gradient-to-br from-blue-50 to-indigo-60 py-16{% endblock %}
+
+{% block content %}
+<div class="max-w-full mx-auto px-6 pt-16">
+  <h2 class="text-4xl font-extrabold text-center pt-6 mb-14 text-gray-800 tracking-tight">Email Preview</h2>
+  <div>
+    <div class="flex justify-between text-l py-4 px-4 bg-gray-200 rounded-t-lg font-semibold text-lg">
+      <div>
+        <p>Total Emails Sent: <b>{{ total_sent }}</b></p>
+        <p>Sent at: {{ email.sent_at }}</p>
+      </div>
+      <div>
+        {% comment %} <p>Opened: 0%</p> {% endcomment %}
+        <p>Clicked: {{ email.calculate_click_rate }}%</p>
+      </div>
+    </div>
+  </div>
+  <div class="bg-white rounded-b-lg shadow-md p-6">
+    <h4 class="text-2xl font-semibold text-center">{{ email.subject }}</h4>
+    <p class="text-lg text-gray-700">{{ email.body | safe }}</p>
+    {% if email.attachment %}
+    <div>
+      <p class="text-sm text-gray-500">Attachment: {{ email.attachment.name }}</p>
+      <img src="{{ email.attachment.url }}" alt="email attachment" width="100%">
+    </div>
+    {% else %}
+    <div>
+      <p class="text-sm text-gray-500">No attachment</p>
+    </div>
+    {% endif %}
+  </div>
+
+
+</div>
+
+{% endblock %}
