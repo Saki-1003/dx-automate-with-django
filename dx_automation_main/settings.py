@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'crispy_tailwind',
     'ckeditor',
     'anymail',
+    'image_compression',
 ]
 
 TAILWIND_DEV_MODE = True
