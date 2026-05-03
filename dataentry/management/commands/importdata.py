@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 from django.apps import apps
 from dataentry.utils import check_csv_errors
 import csv
+import chardet
 
 
 # command - python manage.py importdata <file_path> <model_name>
@@ -18,7 +19,13 @@ class Command(BaseCommand):
     
     model = check_csv_errors(file_path, model_name)
    
-    with open(file_path, "r") as file:
+    # Detect file encoding
+    with open(file_path, "rb") as f:
+      raw_data = f.read()
+      result = chardet.detect(raw_data)
+      encoding = result.get('encoding', 'utf-8')
+    
+    with open(file_path, "r", encoding=encoding) as file:
       reader = csv.DictReader(file)
       for row in reader:
         model.objects.create(**row)

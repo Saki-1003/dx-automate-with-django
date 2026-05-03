@@ -111,7 +111,7 @@ def send_email_notification(mail_subject, message, to_email, attachment=None, em
           mail.send()
 
         # Store the total sent emails inside the Sent model
-        if email:
+        if email_id:
           email = Email.objects.get(pk=email_id)
           sent = Sent()
           sent.email = email

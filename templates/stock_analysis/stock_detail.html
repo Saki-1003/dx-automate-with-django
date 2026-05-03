@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static tailwind_tags %}
+{% load tailwind_filters %}
+{% block body_class %}min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-16{% endblock %}
+
+{% block content %}
+
+
+<div class="min-w-2xl w-fit mx-auto p-16 shadow-lg rounded-lg bg-white mt-20">
+  
+  <h2 class="text-5xl font-bold mb-4 tracking-tight">
+   {{ stock_data.stock }} ({{ stock_data.stock.symbol }})
+  </h2>
+  <h3 class="text-4xl font-bold mb-4">{{ stock_data.current_price }}
+    <span class="text-3xl font-bold {% if '-' in stock_data.price_changed %}text-red-500{% else %}text-green-600{% endif %}">
+      {{ stock_data.price_changed }}
+    </span>
+    <span class="text-3xl font-bold {% if '-' in stock_data.percentage_changed %}text-red-500{% else %}text-green-600{% endif %}">
+      {{ stock_data.percentage_changed }}
+    </span>
+    <span class="text-2xl">
+      {{ stock_data.stock.sector}}
+    </span>
+    <span></span>
+  </h3>
+  <p class="text-lg">{{ stock_data.stock.exchange }} Listed - {{ stock_data.stock.country }}</p>
+  
+  <!-- Modern Stats Grid -->
+  <div class="grid grid-cols-2 gap-4 my-8">
+    <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow">
+      <p class="text-gray-600 text-sm font-semibold uppercase tracking-wide">Previous Close</p>
+      <p class="text-3xl font-bold text-gray-800 mt-2">{{ stock_data.previous_close }}</p>
+    </div>
+    <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow">
+      <p class="text-gray-600 text-sm font-semibold uppercase tracking-wide">Market Cap</p>
+      <p class="text-3xl font-bold text-gray-800 mt-2">{{ stock_data.market_cap }}</p>
+    </div>
+    <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow">
+      <p class="text-gray-600 text-sm font-semibold uppercase tracking-wide">52 Week High</p>
+      <p class="text-3xl font-bold text-gray-800 mt-2">{{ stock_data.week_52_high }}</p>
+    </div>
+    <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow">
+      <p class="text-gray-600 text-sm font-semibold uppercase tracking-wide">52 Week Low</p>
+      <p class="text-3xl font-bold text-gray-800 mt-2">{{ stock_data.week_52_low }}</p>
+    </div>
+    <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow">
+      <p class="text-gray-600 text-sm font-semibold uppercase tracking-wide">PE Ratio</p>
+      <p class="text-3xl font-bold text-gray-800 mt-2">{{ stock_data.pe_ratio }}</p>
+    </div>
+    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg border border-blue-200 hover:shadow-lg transition-shadow">
+      <p class="text-blue-600 text-sm font-semibold uppercase tracking-wide">Dividend Yield</p>
+      <p class="text-3xl font-bold text-blue-800 mt-2">{{ stock_data.dividend_yield }}</p>
+    </div>
+  </div>
+
+  <a href="{% url 'stocks' %}" class="inline-block mt-8 bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-500 hover:to-cyan-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:shadow-xl transition-all duration-200 transform hover:scale-105">
+    ← Check another stock
+  </a>
+</div>
+
+ 
+
+{% endblock %}

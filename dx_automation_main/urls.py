@@ -29,6 +29,7 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('emails/', include('emails.urls')),
     path('image_compression/', include('image_compression.urls')),
+    path('webscraping/', include('stock_analysis.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

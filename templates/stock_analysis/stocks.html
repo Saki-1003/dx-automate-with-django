@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static tailwind_tags %}
+{% load tailwind_filters %}
+{% block body_class %}min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-16{% endblock %}
+
+{% block content %}
+<style>
+  input[type="file"] {
+    border: 1px solid #ccc !important;
+    padding: 8px !important;
+    border-radius: 4px !important;
+  }
+
+  input[type="file"]::file-selector-button {
+    background-color: #e5e5e5 !important;
+    border: 1px solid #ccc !important;
+    padding: 6px 16px !important;
+    margin-right: 12px !important;
+    cursor: pointer !important;
+    border-radius: 4px !important;
+  }
+
+  /* Outlined alert style */
+  .animate-snackbar {
+    background-color: transparent !important;
+    border: 2px solid !important;
+  }
+
+  .animate-snackbar.bg-teal-600 {
+    border-color: #14b8a6 !important;
+    color: #14b8a6 !important;
+  }
+
+  .animate-snackbar.bg-red-600 {
+    border-color: #dc2626 !important;
+    color: #dc2626 !important;
+  }
+
+  .animate-snackbar.bg-yellow-500 {
+    border-color: #eab308 !important;
+    color: #eab308 !important;
+  }
+
+  .animate-snackbar.bg-blue-600 {
+    border-color: #2563eb !important;
+    color: #2563eb !important;
+  }
+
+  /* Select2 styling */
+  .select2-selection {
+    min-height: 50px !important;
+    padding: 10px !important;
+  }
+
+  .select2-selection__rendered {
+    padding: 5px 0 !important;
+  }
+</style>
+
+<div class="max-w-2xl mx-auto px-6 pt-16 shadow-lg rounded-lg bg-white mt-14">
+  
+  <h3 class="text-4xl font-extrabold text-center mb-14 text-green-600 tracking-tight">
+   Stock Market Analysis
+  </h3>
+
+  {% include 'alerts.html'%}
+
+  <form action="{% url 'stocks' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div>
+      {{ form | crispy }}
+    </div>
+
+    <div>
+      <input type="submit" value="Get Info" class="bg-green-600 hover:bg-green-800 text-white text-xl py-2 px-4 rounded mt-10 cursor-pointer mb-12">
+    </div>
+
+  </form>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  {{ form.media }}
+
+{% endblock %}
